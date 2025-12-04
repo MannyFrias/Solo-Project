@@ -93,7 +93,7 @@ router.post('/register', async (req, res, next) => {
         })
 
     } catch (err) {
-        console.error("errror in /register route: ", err); 
+        console.error("error in /register route: ", err); 
         console.error("error name: ", err.name);
         console.error("error message: ", err.message); 
         return next({
@@ -159,7 +159,7 @@ router.post("/login", async (req, res, next) => {
                 expiresIn: EXPIRE || "7d"
             }
         );
-        
+
         console.log("USER ${username} logged in");
 
         res.status(200).json({

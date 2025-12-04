@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const authenticatToken = (req, res, next) => {
+const authenticateToken = (req, res, next) => {
     try {
         // need to grab auth token from header
         // jwt docs say format should be "Bearer <token>"
@@ -24,9 +24,28 @@ const authenticatToken = (req, res, next) => {
 
         // attach data to req obj so other middleware can use data 
         req.user = {
-            userId: decoded.userId
+            userId: decoded.userId,
+            username: decoded.username, 
+            email: decoded.email
         }
+
+        next(); 
     } catch (err) {
-        return next(err);
+        console.error("JWT verification error: ",  err.message); 
+
+
+        let message = "invalid token"; 
+        if (err.name === "TokenExpiredError") {
+            message = 'Token Expired'
+        } else if (err.name === "JsonWebTokenError") {
+            message = 'Invalid Token Format'
+        }
+
+        return res.status(401).json({
+            success: false, 
+            messsage: message
+        })
     }
 }
+
+export default authenticateToken;
