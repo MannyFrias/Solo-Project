@@ -10,6 +10,16 @@ const userSchema = new Schema({
         unique: true, 
         required: true, 
         createdAt: new Date().toISOString()
+    }, 
+    email: {
+        type: String, 
+        unique: true, 
+        requried: true
+    }, 
+    password: {
+        type: String,
+        unique: true, 
+        required: true
     }
 }, {
         timestamps: true

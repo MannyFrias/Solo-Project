@@ -1,10 +1,12 @@
+import dotenv from "dotenv"; 
+dotenv.config(); 
+
 import express, { urlencoded } from "express"; 
 import cors from "cors"; 
 import helmet from "helmet"; 
-import dotenv from "dotenv"; 
 import { connectDB } from "./utils/database.js"; 
+import authRouter from "./routes/auth.js"
 
-dotenv.config(); 
 
 const app = express(); 
 const PORT = process.env.PORT || 8888; 
@@ -37,6 +39,8 @@ app.get("/api/health", (req, res) => {
         timestamp: new Date().toISOString()
     });
 });
+
+app.use("/api/auth", authRouter); 
 
 // unknown route handler 
 // was tring to use the wildcard (*), but nodemon did not like it, it preffered this or using regex "/(.*)/"

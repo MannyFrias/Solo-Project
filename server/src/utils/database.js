@@ -5,13 +5,13 @@ import mongoose from "mongoose";
 export const connectDB = async () => {
     try {
 			const connect = await mongoose.connect(process.env.MONGODB_URI, {
-				dbName: process.env.dbName, 
+				dbName: process.env.db_Name, 
 			})
 			console.log("connected to MongoDB")
 			return connect;
     } catch (err) {
       console.error("Db connection failed", err);
-		process.exitCode(1);
+		process.exit(1);
     }
 }; 
 
