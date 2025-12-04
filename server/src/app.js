@@ -56,7 +56,6 @@ app.use((err, req, res, next) => {
     return res.status(errorObj.status).json(errorObj.message); 
 });
 
-
 app.listen(PORT, () => {
     console.log("Server running on port " + PORT); 
     console.log(`ENV: ${process.env.NODE_ENV}`)
