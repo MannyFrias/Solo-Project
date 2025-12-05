@@ -27,7 +27,7 @@ router.post('/register', async (req, res, next) => {
         
     try {
         // getting user imput from the registration form 
-        const {username, email , password} = req.body; 
+        const { username, email , password } = req.body; 
 
         // check if user exists 
         const existingUser = await User.findOne({
@@ -51,6 +51,8 @@ router.post('/register', async (req, res, next) => {
         // using bcrypt to salt the password the saltRounds amount of times
         const saltRounds = 12; 
         const hashedPassword = await bcrypt.hash(password, saltRounds); 
+
+        console.log(hashedPassword);
 
         // creating new user now that password is hashed 
         // saving after creating of new user w hashed pass

@@ -6,6 +6,7 @@ import cors from "cors";
 import helmet from "helmet"; 
 import { connectDB } from "./utils/database.js"; 
 import authRouter from "./routes/auth.js"
+import authenticateToken from "./middleware/auth.js";
 
 
 const app = express(); 
@@ -23,11 +24,12 @@ app.use(cors({
     credentials: true
 }));
 
+// body parser boilerplate 
 app.use(express.json()); 
 app.use(urlencoded({extended: true})); 
 
 // checking to see if everything is connected
-app.get("/ping", (req, res, next) => {
+app.get("/ping",(req, res, next) => {
     res.status(200).send("pong"); 
 });
 
@@ -39,6 +41,15 @@ app.get("/api/health", (req, res) => {
         timestamp: new Date().toISOString()
     });
 });
+
+// checking to see if my jwt auth is working 
+app.get("/api/protected", authenticateToken, (req, res) => {
+    res.status(200).json({
+        success: true, 
+        message: "access granted to protected route", 
+        user: req.user
+    })
+})
 
 app.use("/api/auth", authRouter); 
 
